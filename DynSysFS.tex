@@ -10,6 +10,8 @@
 
 \newcommand{\os}[2]{\ensuremath{\overset{#1}{#2}}}
 
+\newcommand{\U}{\underline}
+
 \title{Dynamische Systeme}
 
 % Dokumentbeginn
@@ -454,10 +456,13 @@ Wenn $\mathcal{E}_c \subseteq \mathcal{V}$ und $\mathcal{E}_c$ ist beschränkt, 
 
 \section{Passivität}
 \begin{sectionbox}
-Achtung: $V(x)$ ist abstrakte Speicherfunktion \\
-Energiespeicherfunktion zB. aus physikalischer Energiebetrachtung\\
+%Achtung: $V(x)$ ist abstrakte Speicherfunktion \\
+%Energiespeicherfunktion zB. aus physikalischer Energiebetrachtung\\
+Betrachtetes System:
+$$ \dot{\U{x}} = \U{f}(\U{x}, \U{u}) $$
+$$ \U{y} = \U{h}(\U{x}, \U{u}) $$
 
-Verallgemeinerte Energiebilanz und Versorgungsrate eines Systems:
+Verallgemeinerte Energiebilanz und Versorgungsrate des Systems:
 \begin{emphbox}
 $\int\limits_{0}^{t} s(u,y) \diff \tau + V(x(0)) = \int\limits_{0}^{t} g(\tau) \diff \tau + V(x(t))$
 \end{emphbox}
@@ -469,74 +474,101 @@ dissipierte Energie & $\int\limits_{0}^{t} g(\tau) \diff \tau$ \\
 dissipierte Leistung & $g(\tau)$ \\
 gespeicherte Energie & $V(x(t))$ \\
 \end{tablebox}
-Es gilt $\int\limits_{0}^{t}|s(u(\tau), y(\tau))| \diff \tau < \infty$
-
+Es muss gelten $\int\limits_{0}^{t}|s(u(\tau), y(\tau))| \diff \tau < \infty$
 \subsubsection{Dissipativität (dissipativ bzgl $s(u,y)$)}
 $V(x)$ ist psdf \\
 Integrale Dissipativitätsungleichung: $\int\limits_{0}^{t} s(u,y) \diff \tau + V(x(0)) \geq V(x(t))$ \\
 Differentielle Dissipativitätsungleichung: $s(u,y) \geq \dot{V}(x(t))$
 
 \subsubsection{Passivität}
-Dissipativ bzgl spezieller Versorgungsrate $s(u,y) = y^T u$ \\
+Dissipativ bzgl spezieller Versorgungsrate $$s(u,y) = y^T u$$ \\
 $V(x)$ ist psdf \\
 Integrale Passivitätsungleichung: $\int\limits_{0}^{t} y^T u \diff \tau + V(x(0)) \geq V(x(t))$ \\
-Differentielle Passivitätsungleichung: $s(u,y) \geq \dot{V}(x(t))$ \\
+Differentielle Passivitätsungleichung: $$s(u,y) \geq \dot{V}(x(t))$$ \\
 \begin{tabular}{cccc}
-  streng passiv: &  $\Rightarrow$ bei '$>$' & bzw $g(t) > 0$ \\
-  verlustlos:    &  $\Rightarrow$ bei '=' & bzw $g(t) = 0$
-\end{tabular}
+  \textit{streng} passiv: &  $\Rightarrow$ bei '$>$' & bzw $g(t) > 0$ \\
+  \textit{verlustlos}:    &  $\Rightarrow$ bei '=' & bzw $g(t) = 0$ 
+\end{tabular}\\
+\end{sectionbox}
+\begin{sectionbox}
+\textit{Strenge Ausgangspassivität}:
+$$\U{y}^T\U{u} \geq \dot{V}(\dot{\U{x}(t)}) + \U{y}^T \cdot \U{\rho}(\U{y})$$
+ist erfüllt mit
+\begin{itemize}
+	\item $V(\U{x})$ ist psdf und stetig diff'bar 
+	\item $\U{y}^T \cdot \U{\rho}(\U{y})$ ist pdf.
+\end{itemize}
 \end{sectionbox}
 
 \begin{sectionbox}
 \subsection{Passivität und Stabilitätseigenschaften}
-
+Die Aussagen gelten für den ungeregelten Fall: $\U{u} = \U{0}$
 \subsubsection{Passivität und Lyapunov-Stabilität}
 \begin{itemize}
-  \item System ist passiv
-  \item $V$ ist stetig diff'bar und psd
+  \item System ist passiv.
+  \item $V$ ist stetig diff'bar und positiv semidefinit.
 \end{itemize}
-$\Rightarrow$ Ruhelage $x=0$ ist stabil iSvL
+$\Rightarrow$ Ruhelage $\U{x}=\U{0}$ ist stabil i.S.v.L. im ungeregelten Fall ($\U{u}=\U{0}$).
 
 \subsubsection{Null-Zustandsbeobachtbarkeit}
-Nur $x^*=0$ kann in $\mathcal{S} = \left\{ x \in \mathbb{R} | h(x,0)=0 \right\}$ bleiben
+Nur $\U{x}^*=\U{0}$ kann in $\mathcal{S} = \left\{ \U{x} \in \mathbb{R} | \U{h}(\U{x},\U{0})=\U{0} \right\}$ bleiben
 
-\subsubsection{Passivität und asymptotische Stabilität}
-$x^*=0$ ist asymptotisch stabil wenn eine der beiden Punkte zutrifft:
+\subsubsection{Passivität und asymptotische Stabilität} \label{PassStabil}
+$\U{x}^*=\U{0}$ ist asymptotisch stabil im ungeregelten Fall ($\U{u}=\U{0}$), wenn:
 \begin{itemize}
-  \item System ist streng passiv
-  \item über $V(x)$:
+  \item System ist streng passiv oder 
+  \item System ist streng ausgangspassiv und null-zustandsbeobachtbar oder
+  \item über $V(\U{x})$:
     \begin{itemize}
       \item System ist passiv
-      \item $V(x)$ ist stetig diff'bar und pdf
-      \item $\dot{V}(x) = 0 \Leftrightarrow y = 0$
+      \item $V(\U{x})$ ist stetig diff'bar und pdf
+      \item $\dot{V}(\U{x}) = 0 \Leftrightarrow y = 0$
       \item Null-Zustand beobachtbar
     \end{itemize}
 \end{itemize}
 
-Wenn $V(x)$ zusätzlich radial unbeschränkt ist $\Rightarrow x^* = 0$ ist global asymptotisch stabil
+Wenn $V(\U{x})$ zusätzlich radial unbeschränkt ist $\Rightarrow \U{x}^* = \U{0}$ ist global asymptotisch stabil.
 \end{sectionbox}
 
 \section{Passivitätsbasierte Regelung}
 \begin{sectionbox}
-$x^* = 0$ ist global asymptotisch stabil\\
-$\Rightarrow$ System kann stabilisiert werden mit $u = -\Phi(y)$, wobei:
+\subsubsection{Asymptotische Stabilisierung (durch Regelung)}\label{AsymStabil}
+\underline{Voraussetzungen:}
 \begin{itemize}
-  \item $\Phi$ ist lokal Lipschitz-stetig
-  \item $\Phi$ ist beliebig
-  \item $\Phi(0) = 0$
-  \item $y^T \Phi > 0$ für $y \neq 0$
+	\item System ist passiv mit
+	\item radial unbeschränkter, positiv definiter Speicherfunktion $V(\U{x})$ und
+	\item null-zustandsbeobachtbar.
+\end{itemize}
+$\Rightarrow$ System kann \textit{global asymptotisch} stabilisiert werden mit $\U{u} = -\U{\Phi}(\U{y})$.\\
+$\U{\Phi}$ ist beliebig mit:
+\begin{itemize}
+  \item $\U{\Phi}$ ist lokal Lipschitz-stetig
+  \item $\U{\Phi}(0) = \U{0}$
+  \item $\U{y}^T \U{\Phi} > 0$ für $\U{y} \neq \U{0}$
 \end{itemize}
 
 \begin{tabular}{cccc}
-mögliche $\Phi$:  & $\Phi = k_i \text{sat}(y_i)$ & \\
-                  & $\Phi = \frac{2 k_i}{\pi}\text{atan}(y_i)$ &
+mögliche $\U{\Phi}$:  & $\Phi_i = k_i \text{sat}(y_i)$ & $\Phi_i = \frac{2 k_i}{\pi}\text{atan}(y_i)$ &
 \end{tabular}
 
 \subsubsection{Feedback-Passivierung}
-Ziel: Nicht-Passive Systeme in passive transformieren durch spezielle Wahl der Ausgangsfunktion $y=h(x)$ \\
-$\dot{x} = f(x) + G(x)u$ \\
-$\Rightarrow$ Ausgang $y = h(x) \overset{\text{def}}{=} \left[ \frac{\partial V}{\partial x} G \right]^T$ \\
-Ist Ausgang dann Null-Zustandsbeobachtbar $\Rightarrow$ es kann global stabilisierendes Regelgesetz gefunden werden
+$$ \dot{\U{x}} = \U{f}(\U{x}) + \U{G}(\U{x})\U{u} $$
+\underline{Ziel:} Transformiere Nicht-Passives System in passives System durch spezielle Wahl der Ausgangsfunktion $\U{y}=h(\U{x})$ \\
+\underline{Voraussetzung:} Stabiles System im ungeregelten Fall, Prüfe:
+\begin{itemize}
+	\item $V(\U{x})$ existiert als pdf und 
+	\item $V(\U{x})$ ist kontinuierlich diff'bar und 
+	\item Für $\U{u}=\U{0}$ gilt die Ungleichung: $\dot{V}=\frac{\partial V}{\partial \U{x}} \U{f}(\U{x}) \leq 0$.
+\end{itemize}
+$\Rightarrow$ Erhalte \textit{passives} System mit Ausgang $\U{y} = \U{h}(\U{x}) \overset{\text{def}}{=} \left[ \frac{\partial V}{\partial \U{x}} \U{G}(\U{x}) \right]^T$ \\
+Ist das System dann Null-Zustandsbeobachtbar $\Rightarrow$ es kann global stabilisierendes Regelgesetz gefunden werden.\\
+
+\underline{Nicht stabiles System im ungeregeltem Fall} \\
+Finde $\U{u} = \U{\alpha}(\U{x}) + \U{\beta}(\U{x}) \U{v}$, sodass das transformierte System
+$$ \dot{\U{x}} = \U{f}(\U{x}) + \U{G}(\U{x})\U{\alpha}(\U{x}) + \U{G}(\U{x}) \U{\beta}(\U{x}) \U{v}  $$
+die Voraussetzungen von oben bzw. \ref{AsymStabil} erfüllt. \\
+Falls $\U{\alpha}(\U{x})$ und $\U{\beta}(\U{x})$ gefunden $\Rightarrow$ System mit Eingang $\U{v}$ und Ausgang $\U{y}$ kann mit $\U{v} = -\U{\Phi}(\U{y})$ global stabilisiert werden.
+
 \end{sectionbox}
 
 \section{Feedback-Linearisierung}
